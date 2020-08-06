@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -11,6 +11,9 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +35,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register() {
+
+
+export default function SigUp() {
+  // State para iniciar sesión
+  const [user, saveUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
+
+  // Extraer de user
+  const{ name, email, password, confirmPassword } = user; 
+
+  const handleChange = e => {
+    saveUser({
+      ...user,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    // Validar que no haya campos vacios
+
+
+    // Pasarlo a action
+  }
+
+
   const classes = useStyles();
 
   return (
@@ -43,19 +76,34 @@ export default function Register() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Registrarse
+          Iniciar sesión
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Nombre"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            value={name}
+            onChange={handleChange}
+          />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Correo Electrónico"
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -63,14 +111,25 @@ export default function Register() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Contraseña"
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={handleChange}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirmar contraseña"
+            type="confirmPassword"
+            id="confirmPassword"
+            autoComplete="current-password"
+            value={confirmPassword}
+            onChange={handleChange}
           />
           <Button
             type="submit"
@@ -82,14 +141,9 @@ export default function Register() {
             Registrarse
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                ¿Olvidaste la contraseña?
-              </Link>
-            </Grid>
             <Grid item>
-              <Link to="/" variant="body2">
-                {"Volver a iniciar sesión"}
+              <Link to="/">
+                Volver a iniciar sesión
               </Link>
             </Grid>
           </Grid>

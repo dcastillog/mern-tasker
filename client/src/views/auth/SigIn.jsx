@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -6,11 +7,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +35,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+
+
+export default function SigIn() {
+  // State para iniciar sesión
+  const [user, saveUser] = useState({
+    email: '',
+    password: ''
+  })
+
+  // Extraer de user
+  const{ email, password } = user; 
+
+  const handleChange = e => {
+    saveUser({
+      ...user,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    // Validar que no haya campos vacios
+
+
+    // Pasarlo a action
+  }
+
+
   const classes = useStyles();
 
   return (
@@ -45,17 +76,19 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Iniciar sesión
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Correo Electrónico"
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -63,10 +96,12 @@ export default function Login() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Contraseña"
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -88,7 +123,7 @@ export default function Login() {
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/register">
+              <Link to="/sigup">
                 No tienes una cuenta? Regístrate
               </Link>
             </Grid>
