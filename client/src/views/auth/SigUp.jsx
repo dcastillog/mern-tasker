@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -11,7 +11,11 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
+import { CSSTransition } from 'react-transition-group';
 
+import AlertContext from '../../contexts/alerts/alertContext';
+import AuthContext from '../../contexts/auth/authContext';
 
 
 
@@ -21,10 +25,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -37,7 +37,25 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SigUp() {
+const SigUp = (props) => {
+  // Extraer valores del context
+  const alertContext = useContext(AlertContext);
+  const { alert, showAlert } = alertContext;
+
+  const authContext = useContext(AuthContext);
+  const { msg, auth, registerUser } = authContext;
+
+  // Verifica si el usuario esta autenticado o registrado
+  useEffect(() => {
+    if(auth){
+      props.history.push('/projects')
+    }
+
+    if(msg){
+      showAlert(msg.msg, msg.category);
+    }
+  }, [msg, auth, props.history])
+
   // State para iniciar sesión
   const [user, saveUser] = useState({
     name: '',
@@ -60,9 +78,29 @@ export default function SigUp() {
     e.preventDefault();
 
     // Validar que no haya campos vacios
+    if( name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === ''){
+      showAlert('Todos los campos son obligatorios','error')
+      return;
+    }
+
+    if(password.length < 6){
+      showAlert('La contraseña debe ser de al menos 6 caracteres','error')
+      return;
+    }
+
+    if(password != confirmPassword){
+      showAlert('Ambas contraseñas deben ser iguales','error');
+      return; 
+    }
 
 
     // Pasarlo a action
+    registerUser({
+      name,
+      email,
+      password
+    });
+
   }
 
 
@@ -70,11 +108,9 @@ export default function SigUp() {
 
   return (
     <Container component="main" maxWidth="xs">
+      
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
           Iniciar sesión
         </Typography>
@@ -101,7 +137,6 @@ export default function SigUp() {
             label="Correo Electrónico"
             name="email"
             autoComplete="email"
-            autoFocus
             value={email}
             onChange={handleChange}
           />
@@ -125,12 +160,15 @@ export default function SigUp() {
             fullWidth
             name="confirmPassword"
             label="Confirmar contraseña"
-            type="confirmPassword"
+            type="password"
             id="confirmPassword"
             autoComplete="current-password"
             value={confirmPassword}
             onChange={handleChange}
           />
+          { alert ? (
+            <Alert severity={alert.category}>{alert.msg}</Alert>
+          ): null }
           <Button
             type="submit"
             fullWidth
@@ -152,3 +190,5 @@ export default function SigUp() {
     </Container>
   );
 }
+
+export default SigUp;

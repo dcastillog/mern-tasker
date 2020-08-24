@@ -7,7 +7,7 @@ const NewProject = () => {
   
   // Obtener el state del formulario de nuevo proyecto
   const projectsContext = useContext(projectContext);
-  const { form, showForm } = projectsContext;
+  const { form, error, showForm, createProject, showError } = projectsContext;
   
   // State para proyecto 
   const [project, saveProject] = useState({
@@ -28,10 +28,16 @@ const NewProject = () => {
     e.preventDefault();
 
     // Validar proyecto
-
+    if(name==''){
+      showError();
+      return;
+    }
     // Agregar al state
-
+    createProject(project);
     // Reiniciar el formulario
+    saveProject({
+      name: ''
+    })
   }
 
   const handleClick = () => {
@@ -58,11 +64,13 @@ const NewProject = () => {
             value={name}
             onChange={handleOnChangeProject}
             />
-          <Button variant="contained" color="primary" style={{marginTop: '30px'}}>Agregar proyecto</Button>
+          <Button type="submit" variant="contained" color="primary" style={{marginTop: '30px'}}>Agregar proyecto</Button>
         </form>
       ) : (
         null
       )}
+
+      {error ? <p className="message error">El nombre del proyecto es obligatorio</p> : null}
     </Fragment>
   );
 }

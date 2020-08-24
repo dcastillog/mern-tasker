@@ -5,7 +5,6 @@ import ListProjects from '../Projects/ListProjects';
 const Sidebar = () => {
   return(
     <aside>
-      <h1>REA<span>TASK</span></h1>
       <NewProject />
       <div className="projects">
         <h2>Tus proyectos</h2>

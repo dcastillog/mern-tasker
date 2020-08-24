@@ -20,13 +20,14 @@ body {
   font-size: 12px; 
   font-size: 1.6rem;
   font-family: var(--textFont);
+  margin: 0;
 }
 
 
 h1, h2 {
   font-family: var(--headingFont);
   font-weight: 900;
-  margin: 0 0 4rem 0;
+  margin: 0 0 1.5rem 0;
   text-align: center;
   color: var(--gris2);
 }
@@ -34,10 +35,10 @@ h1 span {
   font-weight: 400;
 }
 h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 h2 {
-  font-size: 2.4rem;
+  font-size: 1.8rem;
 }
 ul {
   list-style: none;
@@ -107,10 +108,11 @@ a {
 /* BARRA LATERAL */
 aside  {
   padding: 3rem;
+  text-align: center;
 }
 
 .new-project-form {
-  margin-top: 6rem;
+  margin-top: 3rem;
 }
 .new-project-form .input-text {
   border-bottom: 1px solid var(--gris2);
@@ -121,7 +123,7 @@ aside  {
   color: var(--gris2);
 }
 .projects {
-  margin-top: 10rem;
+  margin-top: 3rem;
 }
 .list-projects li {
   margin-bottom: 2rem;
@@ -140,7 +142,7 @@ aside  {
 }
 .username {
   color: var(--blanco);
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   margin: 0;
 }
 .username span {
@@ -186,7 +188,7 @@ aside  {
 
 
 .list-tasks {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -214,7 +216,7 @@ aside  {
   margin-right: 1rem;
 }
 .task p {
-  font-size: 1.6rem;
+  font-size: 1rem;
   flex: 1;
   padding-right: 2rem;
 }
@@ -230,9 +232,9 @@ aside  {
 }
 .status button, 
 .message {
-  font-weight: 900;
+  font-weight: 600;
   font-family: var(--textFont);
-  font-size: 1rem;
+  font-size: 0.5rem;
   padding: .5rem;
   border-radius: .5rem;
   cursor: pointer;
@@ -240,7 +242,7 @@ aside  {
 }
 .message {
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 1rem;
   border-radius: 0;
 }
 .message:hover {
@@ -248,18 +250,17 @@ aside  {
 }
 .complete,
 .right {
-  background-color: rgba(154, 252, 154, .3);
+  background-color: #0f880f;
   color: var(--gris3);
 }
 .incomplete{
-  background-color: rgba(255, 178, 178, .4);
+  background-color: #e05252;
   color: var(--gris3);
 }
 .error {
   max-width: 600px;
   margin: 2rem auto 0 auto;
-  background-color: rgb(170, 0, 0);
-  color: var(--blanco);
+  color: rgb(170, 0, 0);
 }
 
 .task-enter,

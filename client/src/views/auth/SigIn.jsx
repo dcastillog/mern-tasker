@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -11,8 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
 
-
+import AlertContext from '../../contexts/alerts/alertContext';
+import AuthContext from '../../contexts/auth/authContext';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +39,26 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SigIn() {
+const SigIn = (props) => {
+
+  // Extraer valores del context
+  const alertContext = useContext(AlertContext);
+  const { alert, showAlert } = alertContext;
+
+  const authContext = useContext(AuthContext);
+  const { msg, auth, login } = authContext;
+
+  // Verifica si que el password o usuario exista
+  useEffect(() => {
+    if(auth){
+      props.history.push('/projects')
+    }
+
+    if(msg){
+      showAlert(msg.msg, msg.category);
+    }
+  }, [msg, auth, props.history])
+
   // State para iniciar sesión
   const [user, saveUser] = useState({
     email: '',
@@ -58,9 +79,13 @@ export default function SigIn() {
     e.preventDefault();
 
     // Validar que no haya campos vacios
-
+    if(email.trim() === '' || password.trim() === ''){
+      showAlert('Todos los campos son obligatorios','error')
+      return;
+    }
 
     // Pasarlo a action
+    login({email, password})
   }
 
 
@@ -107,6 +132,9 @@ export default function SigIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
+          { alert ? (
+            <Alert severity={alert.category}>{alert.msg}</Alert>
+          ): null }
           <Button
             type="submit"
             fullWidth
@@ -133,3 +161,5 @@ export default function SigIn() {
     </Container>
   );
 }
+
+export default SigIn;
