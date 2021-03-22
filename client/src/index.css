@@ -4,12 +4,14 @@
   --gris2: #2f3848;
   --gris3: #1a202d;
   --negro: #000000;
-  --headingFont:'Raleway', sans-serif;
-  --textFont:  'Roboto', sans-serif;
+  --headingFont: 'Raleway', sans-serif;
+  --textFont: 'Roboto', sans-serif;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
-} 
+}
 html {
   box-sizing: border-box;
   height: 100%;
@@ -17,14 +19,14 @@ html {
 body {
   min-height: 100%;
   background-color: var(--gris1);
-  font-size: 12px; 
+  font-size: 12px;
   font-size: 1.6rem;
   font-family: var(--textFont);
   margin: 0;
 }
 
-
-h1, h2 {
+h1,
+h2 {
   font-family: var(--headingFont);
   font-weight: 900;
   margin: 0 0 1.5rem 0;
@@ -57,9 +59,9 @@ a {
   padding: 1.5rem;
   font-size: 1.4;
   font-weight: 400;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   border: none;
-  transition: background-color .3s ease;
+  transition: background-color 0.3s ease;
 }
 .btn:hover {
   cursor: pointer;
@@ -90,38 +92,25 @@ a {
 
 @media (min-width: 768px) {
   .container-app {
-      display: flex;
-      min-height: 100vh;
+    display: flex;
+    min-height: 100vh;
   }
 
   aside {
-      background-color: var(--blanco);
-      flex: 0 0 300px;
+    background-color: var(--blanco);
+    flex: 0 0 300px;
   }
   .main-section {
-      flex: 1;
+    flex: 1;
   }
-
 }
 
-
 /* BARRA LATERAL */
-aside  {
+aside {
   padding: 3rem;
   text-align: center;
 }
 
-.new-project-form {
-  margin-top: 3rem;
-}
-.new-project-form .input-text {
-  border-bottom: 1px solid var(--gris2);
-  border-radius: 0;
-  background-color: var(--gris1);
-}
-.new-project-form .input-text::placeholder{
-  color: var(--gris2);
-}
 .projects {
   margin-top: 3rem;
 }
@@ -175,17 +164,10 @@ aside  {
 .input-text {
   padding: 1rem;
   border: none;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   flex: 1;
   width: 100%;
 }
-
-/** taskS LISTADO **/
-.container-tasks {
-  padding: 4rem;
-}
-
-
 
 .list-tasks {
   max-width: 800px;
@@ -196,21 +178,20 @@ aside  {
   display: flex;
   justify-content: space-between;
   background-color: var(--blanco);
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   align-items: center;
   margin-bottom: 1rem;
-  border-radius: .5rem;
-
+  border-radius: 0.5rem;
 }
 .shadow {
-  -webkit-box-shadow: 0px 4px 10px -3px rgba(117,117,117,1);
-  -moz-box-shadow: 0px 4px 10px -3px rgba(117,117,117,1);
-  box-shadow: 0px 4px 10px -3px rgba(117,117,117,1);
+  -webkit-box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
+  -moz-box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
+  box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
 }
 .shadow-dark {
-  -webkit-box-shadow: 0px 6px 11px -8px rgba(0,0,0,0.9);
-  -moz-box-shadow: 0px 6px 11px -8px rgba(0,0,0,0.9);
-  box-shadow: 0px 6px 11px -8px rgba(0,0,0,0.9);
+  -webkit-box-shadow: 0px 6px 11px -8px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 0px 6px 11px -8px rgba(0, 0, 0, 0.9);
+  box-shadow: 0px 6px 11px -8px rgba(0, 0, 0, 0.9);
 }
 .task .actions .btn:first-of-type {
   margin-right: 1rem;
@@ -221,8 +202,8 @@ aside  {
   padding-right: 2rem;
 }
 .task .btn {
-  padding: .8rem;
-  font-size:1.4rem;
+  padding: 0.8rem;
+  font-size: 1.4rem;
   border-radius: 0;
   margin: 0;
 }
@@ -230,13 +211,13 @@ aside  {
 .status {
   margin-right: 1rem;
 }
-.status button, 
+.status button,
 .message {
   font-weight: 600;
   font-family: var(--textFont);
   font-size: 0.5rem;
-  padding: .5rem;
-  border-radius: .5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   border: none;
 }
@@ -253,7 +234,7 @@ aside  {
   background-color: #0f880f;
   color: var(--gris3);
 }
-.incomplete{
+.incomplete {
   background-color: #e05252;
   color: var(--gris3);
 }
@@ -283,26 +264,26 @@ aside  {
 }
 
 .form-user {
-    background-color: var(--gris2);
-    height: 100vh;
-    min-height: 800px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: var(--gris2);
+  height: 100vh;
+  min-height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container-form {
-    padding: 5rem 3rem;
-    max-width: 500px;
-    width: 95%;
-    background-color: var(--blanco);
-    border-radius: 1rem;
+  padding: 5rem 3rem;
+  max-width: 500px;
+  width: 95%;
+  background-color: var(--blanco);
+  border-radius: 1rem;
 }
 
 .form-field {
-    display: flex;
-    margin-bottom: 2rem;
-    align-items: center;
+  display: flex;
+  margin-bottom: 2rem;
+  align-items: center;
 }
 .form-field:last-of-type {
   margin: 0;
@@ -311,9 +292,9 @@ aside  {
   flex: 0 0 100px;
   font-family: var(--textFont);
 }
-.form-field input[type="password"],
-.form-field input[type="email"], 
-.form-field input[type="text"] {
+.form-field input[type='password'],
+.form-field input[type='email'],
+.form-field input[type='text'] {
   border: 1px solid #e1e1e1;
   padding: 1rem;
   flex: 1;
@@ -322,5 +303,5 @@ aside  {
 .link-account {
   margin-top: 2rem;
   display: block;
-  opacity: .7;
+  opacity: 0.7;
 }

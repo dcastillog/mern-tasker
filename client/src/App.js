@@ -1,44 +1,45 @@
-import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import SigIn from './views/auth/SigIn';
-import SigUp from './views/auth/SigUp';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import Login from './views/Auth/Login';
+import SignUp from './views/Auth/SignUp';
 import Home from './views/Home';
 
-import PrivateRoute from './components/Routes/PrivateRoute';
+import PrivateRoute from './routers/PrivateRoute';
 
-import ProjectState from './contexts/projects/projectState';
-import TaskState from './contexts/tasks/taskState';
-import AlertState from './contexts/alerts/alertState';
-import AuthState from './contexts/auth/authState';
+import { AuthContextProvider } from './contexts/auth';
+import { UIContextProvider } from './contexts/ui';
 
+import theme from './config/theme';
 import tokenAuth from './config/tokenAuth';
+import { ThemeProvider } from '@material-ui/styles';
 
-
-// Revisar si tenemos un toen
+// Revisar si tenemos un token
 const token = localStorage.getItem('token');
 
-if(token){
+if (token) {
   tokenAuth(token);
 }
 
 function App() {
   return (
-    <ProjectState>
-      <TaskState>
-        <AlertState>
-          <AuthState>
-            <BrowserRouter>
-              <Switch>
-                <Route exact path="/" component={SigIn} />
-                <Route exact path="/sigup" component={SigUp} />
-                <PrivateRoute exact path="/projects" component={Home} />
-              </Switch>
-            </BrowserRouter>
-          </AuthState>
-        </AlertState>
-      </TaskState>
-    </ProjectState>
-  );   
+    <ThemeProvider theme={theme}>
+      {/* <ProjectState>
+        <TaskState></TaskState>
+      </ProjectState> */}
+      <UIContextProvider>
+        <AuthContextProvider>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/SignUp" component={SignUp} />
+              <PrivateRoute exact path="/projects" component={Home} />
+            </Switch>
+          </Router>
+        </AuthContextProvider>
+      </UIContextProvider>
+    </ThemeProvider>
+  );
 }
 
 export default App;
