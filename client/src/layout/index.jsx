@@ -1,45 +1,35 @@
-import React, { useContext } from 'react';
-import clsx from 'clsx';
+import React, { useState } from "react";
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core";
 
-import { UIContext } from '../contexts/ui';
-import { AppBar, Sidebar } from './components';
+import { AppBar, AppDrawer } from "./components";
 
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(10),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -theme.drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
+    margin: `90px ${theme.spacing(7) + 1}px`,
+    border: "1px solid blue",
   },
 }));
 
 const MainLayout = (props) => {
   const classes = useStyles();
-  const { isOpenDrawer } = useContext(UIContext);
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+
+  const handleIsOpenDrawer = () => {
+    setIsOpenDrawer(!isOpenDrawer);
+  };
 
   return (
-    <div style={{ display: 'flex' }}>
-      <AppBar />
-      <Sidebar />
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: isOpenDrawer,
-        })}
-      >
-        {props.children}
-      </main>
+    <div style={{ display: "flex" }}>
+      <AppBar isOpenDrawer={isOpenDrawer} />
+      <AppDrawer isOpen={isOpenDrawer} onClickClose={handleIsOpenDrawer} />
+      <main className={classes.content}>{props.children}</main>
     </div>
   );
 };
