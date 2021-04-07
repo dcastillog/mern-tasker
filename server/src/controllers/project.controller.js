@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator');
+// const { validationResult } = require('express-validator');
 
 const Project = require('../models/project');
 
@@ -26,10 +26,10 @@ exports.getByAuthUser = async (req, res) => {
  * @returns
  */
 exports.create = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty) {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
 
   try {
     const project = new Project(req.body);
@@ -43,10 +43,10 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty) {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
 
   const { name } = req.body;
   const newProject = {};

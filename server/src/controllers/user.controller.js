@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { validationResult } = require('express-validator');
+// const { validationResult } = require('express-validator');
 
-const { hashPassword } = require('../common/utils/password');
 const User = require('../models/user');
 
 exports.getAll = async (req, res) => {
@@ -26,16 +25,16 @@ exports.getAll = async (req, res) => {
 
 exports.create = async (req, res) => {
   // checkErrors(req);
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    // return res.status(400).json({ errors: errors.array() });
-  }
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   // return res.status(400).json({ errors: errors.array() });
+  // }
 
   const { email } = req.body;
   try {
     let userFound = await User.findOne({ email });
     if (userFound) {
-      return res.status(400).json({ msg: 'User already exists' });
+      return res.status(400).json({ msg: 'error' });
     }
 
     const user = new User(req.body);
