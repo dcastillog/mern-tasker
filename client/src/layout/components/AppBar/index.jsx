@@ -3,17 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { HiUser } from 'react-icons/hi';
 
-import {
-  AppBar as MdiAppBar,
-  Button,
-  Menu,
-  MenuItem,
-  Grid,
-  makeStyles,
-  Toolbar,
-  Typography,
-  Icon,
-} from '@material-ui/core';
+import { AppBar as MdiAppBar, Button, Menu, MenuItem, Grid, makeStyles, Toolbar, Typography, Icon } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -68,18 +58,16 @@ const AppBar = ({ isOpenDrawer }) => {
                 Hola <span>{authenticatedUser.name}</span>
               </p>
             ) : null} */}
-            Hellooo
+            <p className="username">
+              Hello <span>Username </span>
+            </p>
           </h5>
         </Grid>
         <Grid container direction="row" justify="flex-end" alignItems="center">
           {/* <Button color="inherit" onClick={() => logout()}>
             CERRAR SESIÓN
           </Button> */}
-          <Button
-            color="inherit"
-            style={{ textTransform: 'none' }}
-            onClick={handleOpenMenu}
-          >
+          <Button color="inherit" style={{ textTransform: 'none' }} onClick={handleOpenMenu}>
             <Grid container justify="flex-end" alignItems="center">
               <Grid item>
                 <Typography>Name</Typography>

@@ -1,16 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import { ThemeProvider } from "@material-ui/styles";
-import { CssBaseline } from "@material-ui/core";
+import { ThemeProvider } from '@material-ui/styles';
+import { CssBaseline } from '@material-ui/core';
 
-import { AuthContext } from "./contexts/auth";
+import { AuthContext } from './contexts/auth';
 
-import AppRouter from "./routers/AppRouter";
-import theme from "./styles/materialui/theme";
-import tokenAuth from "./config/tokenAuth";
+import AppRouter from './routers/AppRouter';
+import theme from './styles/materialui/theme';
+import tokenAuth from './config/tokenAuth';
+import 'animate.css';
 
 // Revisar si tenemos un token
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 
 if (token) {
   tokenAuth(token);

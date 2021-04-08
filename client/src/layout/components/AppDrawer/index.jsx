@@ -2,14 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import {
-  Divider,
-  Drawer,
-  IconButton,
-  makeStyles,
-  useTheme,
-} from '@material-ui/core';
-import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import { Divider, Drawer, IconButton, makeStyles, useTheme } from '@material-ui/core';
+import { HiMenuAlt1, HiChevronLeft } from 'react-icons/hi';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -64,13 +58,15 @@ const AppDrawer = ({ isOpen, onClickClose }) => {
       anchor="left"
     >
       <div className={classes.drawerHeader}>
-        <IconButton onClick={onClickClose}>
-          {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
-        </IconButton>
+        <IconButton onClick={onClickClose}>{isOpen ? <HiChevronLeft /> : <HiMenuAlt1 />}</IconButton>
       </div>
-      <h1>
-        TAS<span>KER</span>
-      </h1>
+      {isOpen ? (
+        <h1>
+          TAS<span>KER</span>
+        </h1>
+      ) : (
+        <div></div>
+      )}
       <Divider />
       <aside>
         {/* <ProjectForm />

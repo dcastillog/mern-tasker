@@ -8,15 +8,7 @@ import InputTask from '../InputTask';
 import TaskList from '../TaskList';
 import EmptyTasks from '../EmptyTasks';
 
-const UserTasks = ({
-  tasks,
-  isLoadingAdd,
-  onAdd,
-  onRemove,
-  onEdit,
-  onUpdate,
-  onToggle,
-}) => {
+const UserTasks = ({ tasks, isLoadingAdd, onAdd, onRemove, onEdit, onUpdate, onToggle }) => {
   const [newTask, handleInputChange, reset] = useInput('');
 
   const handleAddTask = () => {
@@ -26,20 +18,11 @@ const UserTasks = ({
   };
 
   const renderInputTask = () => (
-    <InputTask
-      value={newTask}
-      isLoadingAdd={isLoadingAdd}
-      onChange={handleInputChange}
-      onAdd={handleAddTask}
-    />
+    <InputTask value={newTask} isLoadingAdd={isLoadingAdd} onChange={handleInputChange} onAdd={handleAddTask} />
   );
   const renderEmptyTasks = () => <EmptyTasks />;
   const renderTaskList = () => (
-    <TaskList
-      tasks={tasks}
-      onRemove={(id) => onRemove(id)}
-      onToggle={onToggle}
-    />
+    <TaskList tasks={tasks} onRemove={(id) => onRemove(id)} onUpdate={onUpdate} onEdit={onEdit} onToggle={onToggle} />
   );
 
   return (

@@ -15,6 +15,7 @@ import {
   Divider,
   makeStyles,
 } from '@material-ui/core';
+import useInput from '../../hooks/useInput';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -23,48 +24,65 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TaskList = ({ tasks = [], onRemove, onToggle }) => {
+const TaskList = ({ tasks = [], onRemove, onUpdate, onEdit, onToggle }) => {
   const classes = useStyles();
 
   const handleRemoveTask = (id) => {
     onRemove(id);
   };
+  const completedTasks = tasks.filter((task) => task.isCompleted);
 
   return (
     <List>
       {tasks.map((task) => {
+        if (!task.isCompleted) {
+          return (
+            <ListItem key={task.id}>
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={task.isCompleted}
+                  tabIndex={-1}
+                  onClick={() => onToggle(task.id, 'isCompleted', !task.isCompleted, true)}
+                />
+              </ListItemIcon>
+              <Input
+                value={task.text}
+                onBlur={() => onUpdate(task)}
+                onChange={(e) => onEdit(task.id, e.target.value)}
+                className={classes.input}
+              />
+              <ListItemSecondaryAction>
+                <Tooltip title="Delete">
+                  <IconButton onClick={() => handleRemoveTask(task.id)}>
+                    <HiOutlineTrash />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Assign To">
+                  <IconButton>
+                    <MdAssignmentInd />
+                  </IconButton>
+                </Tooltip>
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
+        }
+      })}
+      <Divider />
+      {completedTasks.map((completedTask) => {
         return (
-          <ListItem key={task.id}>
+          <ListItem>
             <ListItemIcon>
               <Checkbox
                 edge="start"
-                checked={task.isCompleted}
-                onClick={onToggle(!task.isCompleted)}
+                checked={completedTask.isCompleted}
+                onClick={() => onToggle(completedTask.id, 'isCompleted', !completedTask.isCompleted, true)}
               />
             </ListItemIcon>
-            <Input value={task.text} className={classes.input} />
-            <ListItemSecondaryAction>
-              <Tooltip title="Delete">
-                <IconButton onClick={() => handleRemoveTask(task.id)}>
-                  <HiOutlineTrash />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Assign To">
-                <IconButton>
-                  <MdAssignmentInd />
-                </IconButton>
-              </Tooltip>
-            </ListItemSecondaryAction>
+            <Input disabled readOnly value={completedTask.text} className={classes.input} />
           </ListItem>
         );
       })}
-      <Divider />
-      <ListItem>
-        <ListItemIcon>
-          <Checkbox edge="start" checked />
-        </ListItemIcon>
-        <Input disabled readOnly value="Task1" className={classes.input} />
-      </ListItem>
     </List>
   );
 };
@@ -72,67 +90,9 @@ const TaskList = ({ tasks = [], onRemove, onToggle }) => {
 TaskList.propTypes = {
   tasks: PropTypes.array,
   onRemove: PropTypes.func,
+  onUpdate: PropTypes.func,
+  onEdit: PropTypes.func,
   onToggle: PropTypes.func,
 };
 
 export default TaskList;
-
-// import React, { Fragment, useContext } from "react";
-// import Container from "@material-ui/core/Container";
-// import Button from "@material-ui/core/Button";
-// import Task from "../Task";
-
-// import { CSSTransition, TransitionGroup } from "react-transition-group";
-
-// import { ProjectContext } from "../../contexts/project";
-// import { TaskContext } from "../../contexts/task";
-
-// export default function TaskList() {
-//   const { project, deleteProject } = useContext(ProjectContext);
-//   const { tasksproject } = useContext(TaskContext);
-
-//   // Si no hay proyecto seleccionado
-//   if (!project) return <h2>Selecciona un proyecto</h2>;
-
-//   // Array destructuring para extraer proyecto actual
-//   const [currentProject] = project;
-
-//   const tasks = tasksproject;
-
-//   const handleClickDelete = () => {
-//     deleteProject(currentProject._id);
-//   };
-
-//   return (
-//     <Fragment>
-//       <h2>Proyecto: {currentProject.name}</h2>
-//       <ul className="list-tasks">
-//         {tasks?.length === 0 ? (
-//           <li className="task">
-//             <p>No hay tareas</p>
-//           </li>
-//         ) : (
-//           <TransitionGroup>
-//             {tasks?.map((task) => (
-//               <CSSTransition key={task.id} timeout={200} classNames="task">
-//                 <Task task={task} />
-//               </CSSTransition>
-//             ))}
-//           </TransitionGroup>
-//         )}
-//       </ul>
-
-//       <Container maxWidth="sm">
-//         <Button
-//           type="button"
-//           variant="contained"
-//           color="secondary"
-//           onClick={handleClickDelete}
-//           fullWidth
-//         >
-//           Eliminar Proyecto
-//         </Button>
-//       </Container>
-//     </Fragment>
-//   );
-// }

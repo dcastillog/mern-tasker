@@ -22,8 +22,18 @@ const TaskContainer = ({ tasks, onAddTask, onSetTask }) => {
     setIsLoadingAdd(false);
   };
 
-  const handleToggle = (checked = false) => {
-    console.log(checked, 'sss');
+  const handleToggle = (id, field, value, save = false) => {
+    const tmpTasks = tasks.map((task) => {
+      const tmpTask = task;
+      if (tmpTask.id === id) {
+        tmpTask[field] = value;
+      }
+      if (save) {
+        handleUpdateTask(tmpTask);
+      }
+      return tmpTask;
+    });
+    onSetTask(tmpTasks);
   };
 
   const handleRemoveTask = async (id) => {
@@ -31,7 +41,7 @@ const TaskContainer = ({ tasks, onAddTask, onSetTask }) => {
   };
 
   const handleUpdateTask = async (task) => {
-    console.log('Update Task');
+    console.log(task, 'Updated task');
   };
 
   const handleEditTask = async (id, text) => {
