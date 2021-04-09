@@ -15,14 +15,15 @@ const style = {
   },
 };
 
-const LoginForm = ({ email }) => {
+const LoginForm = ({ email, onSignInWithEmailAndPassword }) => {
   const [formValues, handleInputChange, reset] = useForm({ email: email, password: '' });
   const [error, setError] = useState('');
-
+  console.log(email, 'email');
   const handleLogin = () => {
     const { email, password } = formValues;
     if (email === '' || password === '') {
     }
+    onSignInWithEmailAndPassword();
   };
 
   return (

@@ -1,4 +1,5 @@
 import { decodeValue, encodeValue } from '../utils';
+import redirect from './redirect';
 
 export const setCookie = () => {};
 
@@ -18,7 +19,7 @@ export const setLocaleStorage = (key, value) => {
 
 export const getLocaleStorage = (key) => {
   if (process.browser) {
-    window.localStorage.getItem(key);
+    const value = window.localStorage.getItem(key);
     return decodeValue(key);
   }
   return null;
@@ -31,11 +32,23 @@ export const removeLocaleStorage = (key) => {
 };
 
 export const getJwt = () => {
-  return getLocaleStorage('token');
+  return getLocaleStorage('tokens');
 };
 
 export const isAuthenticated = () => !!getJwt();
 
-export const redirectIfAuthenticated = () => {};
+export const redirectIfAuthenticated = () => {
+  if (isAuthenticated()) {
+    redirect('/home');
+    return true;
+  }
+  return false;
+};
 
-export const redirectIfNotAuthenticated = () => {};
+export const redirectIfNotAuthenticated = () => {
+  if (!isAuthenticated()) {
+    redirect('/login');
+    return true;
+  }
+  return false;
+};

@@ -3,27 +3,33 @@ import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
-import { AuthContext } from './contexts/auth';
-
+import AuthContext from './contexts/auth';
+import { ApiContext } from './contexts/api';
+import { Api } from './lib/api';
 import AppRouter from './routers/AppRouter';
 import theme from './styles/materialui/theme';
-import tokenAuth from './config/tokenAuth';
 import 'animate.css';
 
-// Revisar si tenemos un token
-const token = localStorage.getItem('token');
+// import tokenAuth from './config/tokenAuth';
 
-if (token) {
-  tokenAuth(token);
-}
+// Revisar si tenemos un token
+// const token = localStorage.getItem('token');
+
+// if (token) {
+//   tokenAuth(token);
+// }
+
+const api = new Api();
 
 function App() {
   return (
     <>
       <AuthContext.Provider>
-        <ThemeProvider theme={theme}>
-          <AppRouter />
-        </ThemeProvider>
+        <ApiContext.Provider value={api}>
+          <ThemeProvider theme={theme}>
+            <AppRouter />
+          </ThemeProvider>
+        </ApiContext.Provider>
       </AuthContext.Provider>
       <CssBaseline />
     </>

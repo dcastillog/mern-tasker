@@ -1,3 +1,18 @@
-export function devodeValue(value) {}
+export function decodeValue(value) {
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value);
+    } catch (e) {
+      console.log('(decodeValue) not_parse_value');
+    }
+  }
 
-export function encodeValue(value) {}
+  return value;
+}
+
+export function encodeValue(value) {
+  if (typeof value === 'string') {
+    return value;
+  }
+  return JSON.stringify(value);
+}

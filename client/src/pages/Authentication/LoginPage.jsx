@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { makeStyles, Dialog, TextField } from '@material-ui/core';
@@ -8,6 +8,8 @@ import AuthLayout from '../../layout/auth';
 import AuthButton from './components/AuthButton';
 import Error from '../../components/Error';
 import SignUpDialog from './SignUpDialog';
+import { ApiContext } from '../../contexts/api';
+import { withAuthWrapper } from '../../hoc/withAuthWrapper';
 
 const useStyles = makeStyles((theme) => ({
   emailContainer: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = (props) => {
+const LoginPage = ({}) => {
   const classes = useStyles();
   const history = useHistory();
   const [email, handleInputChange] = useInput('');
@@ -62,7 +64,7 @@ const LoginPage = (props) => {
         },
       });
     }
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   const handleOpenSignupDialog = () => {
@@ -101,4 +103,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default LoginPage;
+export default withAuthWrapper(LoginPage);
