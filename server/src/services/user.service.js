@@ -9,9 +9,8 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
-  const userFound = await User.findOne({ email: userBody.email });
-  if (userFound) {
-    throw new ApiError(httpStatus.FORBIDDEN, 'User already exists');
+  if (await User.isEmailTaken(userBody.email)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
   const user = await User.create(userBody);
   return user;

@@ -4,19 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "cross-env NODE_ENV=production node src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
-    "start": "cross-env NODE_ENV=production node src/index.js"
+    "test": "jest -i --colors --verbose --detectOpenHandles",
+    "test:watch": "jest -i --watchAll",
+    "coverage": "",
+    "coverage:coveralls": "",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.4"
-  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-security": "^1.4.0",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
     "http-status": "^1.5.0",
@@ -25,9 +33,21 @@
     "moment": "^2.29.1",
     "mongoose": "^5.9.29",
     "morgan": "^1.10.0",
+    "node-mocks-http": "^1.10.1",
+    "nodemailer": "^6.5.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "validator": "^13.5.2",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "coveralls": "^3.1.0",
+    "eslint": "^7.24.0",
+    "eslint-plugin-jest": "^24.3.5",
+    "faker": "^5.5.3",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.2.1",
+    "supertest": "^6.1.3"
   }
 }

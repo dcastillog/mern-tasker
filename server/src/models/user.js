@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const { toJSON, paginate } = require('./plugins');
+const { roles } = require('../config/roles');
 
 const userSchema = mongoose.Schema(
   {
@@ -25,12 +27,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      minLength: 8,
+      minlength: 8,
       validate(value) {
         if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error(
-            'Password must contain at least one letter and one number'
-          );
+          throw new Error('Password must contain at least one letter and one number');
         }
       },
       // private: true,
@@ -40,7 +40,8 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      default: 'USER',
+      enum: roles,
+      default: 'user',
     },
     isEmailVerified: {
       type: Boolean,
@@ -57,7 +58,8 @@ const userSchema = mongoose.Schema(
 );
 
 // add plugin that converts mongoose to JSON
-// userSchema.plugin();
+userSchema.plugin(toJSON);
+userSchema.plugin(paginate);
 
 /**
  * Check if email is taken
