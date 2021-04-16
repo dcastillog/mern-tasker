@@ -1,19 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
 import history from '../lib/history';
-import Home from '../pages/Home';
-import LoginPage from '../pages/Authentication/LoginPage';
-import EnterPasswordPage from '../pages/Authentication/EnterPasswordPage';
 import PrivateRoute from './PrivateRoute';
+import { Welcome, Home, EnterEmail, EnterPassword, ForgotPassword, NotFound } from '../pages';
 
 const AppRouter = (props) => {
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/login/enter-password" component={EnterPasswordPage} />
-        <Route exact path="/home" component={Home} />
+        <Route exact path="/" component={Welcome} />
+        <Route exact path="/login" component={EnterEmail} />
+        <Route exact path="/login/enter-password" component={EnterPassword} />
+        <Route exact path="/login/forgot-password" component={ForgotPassword} />
+        <PrivateRoute exact path="/home" component={Home} />
+        <Route exact path="*" component={NotFound} />
       </Switch>
     </Router>
   );

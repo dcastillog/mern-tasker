@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Container, Grid, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import { Container, Grid, Button, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   loginButton: {
@@ -14,24 +13,10 @@ const UserNotLogged = (props) => {
   const classes = useStyles();
   return (
     <Container>
-      <Grid
-        container
-        justify="space-around"
-        alignItems="center"
-        direction="column"
-      >
+      <Grid container justify="space-around" alignItems="center" direction="column">
         <h4>You're not logged</h4>
-        <img
-          width="40%"
-          color="primary"
-          src="/not-logged.svg"
-          alt="Not logged"
-        />
-        <Button
-          className={classes.loginButton}
-          variant="contained"
-          color="primary"
-        >
+        <img width="40%" color="primary" src="/not-logged.svg" alt="Not logged" />
+        <Button className={classes.loginButton} variant="contained" color="primary">
           <span>Login</span>
         </Button>
       </Grid>

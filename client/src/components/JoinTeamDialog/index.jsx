@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useInput } from '../../hooks';
+
 import {
   Button,
   Dialog,
@@ -12,19 +14,8 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 
-import { useInput } from '../../hooks';
-
 const JoinTeamDialog = ({ isLoading, open, onClose, onJoinTeam }) => {
   const [teamCode, handleInputChange, reset] = useInput('');
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      if (teamCode) {
-        onJoinTeam(teamCode);
-        reset();
-      }
-    }
-  };
 
   const handleJoinTeam = () => {
     onJoinTeam(teamCode);
@@ -49,7 +40,7 @@ const JoinTeamDialog = ({ isLoading, open, onClose, onJoinTeam }) => {
             fullWidth
             value={teamCode}
             onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
+            onKeyDown={(e) => (e.key === 'Enter' ? handleJoinTeam() : '')}
           />
         </DialogContent>
       )}

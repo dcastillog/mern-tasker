@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Container, Grid, Button } from '@material-ui/core';
 
-import JoinTeamDialog from '../JoinTeamDialog';
-import CreateTeamDialog from '../CreateTeamDialog';
+import { JoinTeamDialog, CreateTeamDialog } from '../';
 
 const style = {
   button: {

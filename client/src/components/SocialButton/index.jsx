@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+
+import { FcGoogle, FaGithub } from 'react-icons/all';
 import { Button, makeStyles } from '@material-ui/core';
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
 
 const useStyles = makeStyles((theme) => ({
   socialButton: {

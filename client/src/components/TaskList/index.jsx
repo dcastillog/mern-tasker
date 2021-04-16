@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { HiOutlineTrash } from 'react-icons/hi';
-import { MdAssignmentInd } from 'react-icons/md';
+import { HiOutlineTrash, MdAssignmentInd } from 'react-icons/all';
 import {
   List,
   ListItem,
@@ -15,7 +14,6 @@ import {
   Divider,
   makeStyles,
 } from '@material-ui/core';
-import useInput from '../../hooks/useInput';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -76,7 +74,9 @@ const TaskList = ({ tasks = [], onRemove, onUpdate, onEdit, onToggle }) => {
               <Checkbox
                 edge="start"
                 checked={completedTask.isCompleted}
-                onClick={() => onToggle(completedTask.id, 'isCompleted', !completedTask.isCompleted, true)}
+                onClick={() =>
+                  onToggle(completedTask.id, 'isCompleted', !completedTask.isCompleted, true)
+                }
               />
             </ListItemIcon>
             <Input disabled readOnly value={completedTask.text} className={classes.input} />

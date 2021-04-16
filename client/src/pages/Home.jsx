@@ -1,15 +1,13 @@
 import React from 'react';
 
-import MainLayout from '../layout';
-import UserNotLogged from '../components/UserNotLogged';
-import HomeContainer from '../containers/HomeContainer';
+import HomeContainer from '../containers/Home';
+import HomeLayout from '../layout/home';
 
 const Home = (props) => {
   return (
-    <MainLayout>
+    <HomeLayout>
       <HomeContainer />
-      {/* <UserNotLogged /> */}
-    </MainLayout>
+    </HomeLayout>
   );
 };
 

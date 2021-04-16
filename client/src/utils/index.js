@@ -6,7 +6,6 @@ export function decodeValue(value) {
       console.log('(decodeValue) not_parse_value');
     }
   }
-
   return value;
 }
 

@@ -3,7 +3,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
   drawerWidth: 250,
   overrides: {
-    // Style sheet name ⚛️
     MuiButton: {
       text: {
         borderRadius: '0.375rem',
@@ -23,16 +22,17 @@ const theme = createMuiTheme({
     },
   },
   palette: {
+    // type: 'dark',
     primary: {
-      light: '#6E94FF',
-      main: '#3d72fe',
-      dark: '#2E5AD4',
+      light: '#ffaeae',
+      main: '#f75a5a',
+      dark: '#ad3f3f',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#46adfa',
-      main: '#419ee5',
-      dark: '#388bc9',
+      light: '#f7995a',
+      main: '#f7995a',
+      dark: '#313131',
       contrastText: '#fff',
     },
     error: {
@@ -58,7 +58,10 @@ const theme = createMuiTheme({
       main: '#FFE271',
       dark: '#FFECA2',
     },
-
+    text: {
+      primary: '#333333',
+      secondary: '#111',
+    },
     contrastThreshold: 3,
     tonalOffset: 0.2,
   },

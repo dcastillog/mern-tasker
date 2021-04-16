@@ -22,6 +22,25 @@ class Api {
           reject(new Error('Sorry, something went wrong. Please try later'));
         })
         .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
+  signUp = async (data) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post('/auth/signup', data)
+        .then((response) => {
+          if (response) {
+            const { user } = response.data;
+            const { tokens } = response.data;
+            console.log(response, 'resposne');
+            resolve({ user, tokens });
+          }
+          reject(new Error('Sorry, something went wrong. Please try later'));
+        })
+        .catch((error) => {
           console.log(error);
         });
     });

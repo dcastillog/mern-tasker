@@ -1,0 +1,6 @@
+{
+  "name": "team-container",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TeamContainer.jsx"
+}

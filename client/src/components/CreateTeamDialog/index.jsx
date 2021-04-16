@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useInput } from '../../hooks';
+
 import {
   Button,
   Dialog,
@@ -11,7 +13,6 @@ import {
   DialogActions,
   CircularProgress,
 } from '@material-ui/core';
-import { useInput } from '../../hooks';
 
 const CreateTeamDialog = ({ open, isLoading, onClose, onCreateTeam }) => {
   const [teamName, handleInputChange, reset] = useInput('');
@@ -40,8 +41,8 @@ const CreateTeamDialog = ({ open, isLoading, onClose, onCreateTeam }) => {
       ) : (
         <DialogContent>
           <DialogContentText>
-            You can create a team and then share code with your team members,
-            split your work sharing tasks with your team
+            You can create a team and then share code with your team members, split your work
+            sharing tasks with your team
           </DialogContentText>
           <TextField
             autoFocus
