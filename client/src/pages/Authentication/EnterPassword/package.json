@@ -1,6 +1,0 @@
-{
-  "name": "enter-password-page",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./EnterPasswordPage.jsx"
-}

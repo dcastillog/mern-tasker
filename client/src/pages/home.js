@@ -1,13 +1,13 @@
 import React from 'react';
 
 import HomeContainer from '../containers/Home';
-import HomeLayout from '../layout/home';
+import MainLayout from '../layouts/main';
 
 const Home = (props) => {
   return (
-    <HomeLayout>
+    <MainLayout>
       <HomeContainer />
-    </HomeLayout>
+    </MainLayout>
   );
 };
 

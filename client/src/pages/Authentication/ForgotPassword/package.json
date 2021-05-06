@@ -1,6 +1,0 @@
-{
-  "name": "forgot-password-page",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./ForgotPasswordPage.jsx"
-}

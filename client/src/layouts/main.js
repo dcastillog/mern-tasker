@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
-
-import { AppBar, AppDrawer } from '../components';
+import { AuthContext } from '../contexts/auth';
+import Header from './header';
+import Sidebar from './sidebar';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -17,21 +18,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HomeLayout = (props) => {
+const MainLayout = ({ children }) => {
   const classes = useStyles();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-
+  const { user, removeAuth } = useContext(AuthContext);
   const handleIsOpenDrawer = () => {
     setIsOpenDrawer(!isOpenDrawer);
   };
 
   return (
     <div style={{ display: 'flex' }}>
-      <AppBar isOpenDrawer={isOpenDrawer} />
-      <AppDrawer isOpen={isOpenDrawer} onClickClose={handleIsOpenDrawer} />
-      <main className={classes.content}>{props.children}</main>
+      <Header user={user} onLogout={removeAuth} isOpenDrawer={isOpenDrawer} />
+      <Sidebar isOpen={isOpenDrawer} onClickClose={handleIsOpenDrawer} />
+      <main className={classes.content}>{children}</main>
     </div>
   );
 };
 
-export default HomeLayout;
+export default MainLayout;

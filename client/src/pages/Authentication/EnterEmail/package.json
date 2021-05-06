@@ -1,6 +1,0 @@
-{
-  "name": "enter-email-page",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./EnterEmailPage.jsx"
-}

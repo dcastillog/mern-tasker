@@ -7,7 +7,12 @@ import { SocialButton, SeparatorLine } from '../components';
 const useStyles = makeStyles((theme) => ({
   container: {
     height: '100vh',
-    paddingTop: '30px',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: '90px',
+    },
+    [theme.breakpoints.down('lg')]: {
+      paddingTop: '50px',
+    },
   },
   footer: {
     fontSize: '16px',
@@ -19,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '500',
     color: theme.palette.text.hint,
   },
+  logo: {
+    width: '10%',
+    [theme.breakpoints.down('xs')]: {
+      width: '28%',
+    },
+  },
 }));
 
 const AuthLayout = ({ children, footer }) => {
@@ -29,7 +40,7 @@ const AuthLayout = ({ children, footer }) => {
     <div className={classes.root}>
       <AppBar style={{ background: theme.palette.secondary.dark }}>
         <Grid container alignItems="center" justify="flex-start">
-          <img width="10%" src="/images/logo-dark.svg" alt="" />
+          <img className={classes.logo} src="/images/logo-dark.svg" alt="Tudu logo" />
         </Grid>
       </AppBar>
       <Grid alignItems="center" justify="center" direction="column" container className={classes.container}>

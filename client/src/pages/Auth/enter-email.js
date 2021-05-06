@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Grid, makeStyles, TextField } from '@material-ui/core';
-import { useInput } from '../../../hooks';
-import { withAuth } from '../../../hoc/withAuth';
-import AuthLayout from '../../../layout/auth';
-import { ErrorMessage, LoadingButton, SignUpDialog } from '../../../components';
+import { useInput } from '../../hooks';
+import { withAuth } from '../../hoc/withAuth';
+import AuthLayout from '../../layouts/auth';
+import { ErrorMessage, LoadingButton, SignUpDialog } from '../../components';
 import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({

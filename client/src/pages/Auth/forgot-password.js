@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AuthLayout from '../../../layout/auth';
+import AuthLayout from '../../layouts/auth';
 
 const ForgotPasswordPage = (props) => {
   return (

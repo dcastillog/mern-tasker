@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppDrawer = ({ isOpen, onClickClose }) => {
+const Sidebar = ({ isOpen, onClickClose }) => {
   const classes = useStyles();
 
   return (
@@ -59,7 +59,7 @@ const AppDrawer = ({ isOpen, onClickClose }) => {
       <div className={classes.drawerHeader}>
         <IconButton onClick={onClickClose}>{isOpen ? <HiChevronLeft /> : <HiMenuAlt1 />}</IconButton>
       </div>
-      {isOpen ? <h1>dusti</h1> : <div></div>}
+      {isOpen ? <h1>tudu</h1> : <div></div>}
       <Divider />
       <aside>
         {/* <ProjectForm />
@@ -72,9 +72,9 @@ const AppDrawer = ({ isOpen, onClickClose }) => {
   );
 };
 
-AppDrawer.propTypes = {
+Sidebar.propTypes = {
   isOpen: PropTypes.bool,
   onClickClose: PropTypes.func,
 };
 
-export default AppDrawer;
+export default Sidebar;

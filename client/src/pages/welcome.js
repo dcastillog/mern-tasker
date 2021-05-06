@@ -36,7 +36,7 @@ const Welcome = (props) => {
       <main className={classes.content}>
         <div className={classes.titleContainer}>
           <h1 className={classes.title}>
-            Organízalo todo con <strong>dusti</strong>
+            Organízalo todo con <strong>tudu</strong>
           </h1>
         </div>
         <Grid container alignItems="center" justify="center">

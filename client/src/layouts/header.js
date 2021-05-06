@@ -2,10 +2,36 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { HiUser } from 'react-icons/hi';
-import { AppBar as MdiAppBar, Button, Menu, MenuItem, Grid, Toolbar, Typography, Icon } from '@material-ui/core';
-import { useStyles } from './styles';
+import { withApi } from '../hoc/withApi';
+import { AppBar, Button, Menu, MenuItem, Grid, Toolbar, Typography, Icon, makeStyles } from '@material-ui/core';
+// import { useStyles } from './styles';
 
-const AppBar = ({ isOpenDrawer }) => {
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    width: `calc(100% - ${theme.spacing(7) + 1}px)`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: `calc(100% - ${theme.drawerWidth}px)`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: 'none',
+  },
+}));
+
+const Header = ({ user, api, onLogout, isOpenDrawer }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -16,10 +42,18 @@ const AppBar = ({ isOpenDrawer }) => {
   const handleCloseMenu = (event) => {
     setAnchorEl(null);
   };
-  // const { authenticatedUser, logout } = useContext(AuthContext);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    if (api) {
+      await api.logout();
+    }
+    await onLogout();
+    window.location = '/login';
+  };
 
   return (
-    <MdiAppBar
+    <AppBar
       position="fixed"
       className={clsx(classes.appBar, {
         [classes.appBarShift]: isOpenDrawer,
@@ -56,16 +90,19 @@ const AppBar = ({ isOpenDrawer }) => {
           </Button>
           <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
             <MenuItem>Profile</MenuItem>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Grid>
       </Toolbar>
-    </MdiAppBar>
+    </AppBar>
   );
 };
 
-AppBar.propTypes = {
+Header.propTypes = {
   isOpenDrawer: PropTypes.bool,
+  api: PropTypes.object,
+  onLogout: PropTypes.func,
+  user: PropTypes.object,
 };
 
-export default AppBar;
+export default withApi(Header);

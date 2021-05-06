@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
-import AuthLayout from '../../../layout/auth';
-import LoginForm from '../../../components/LoginForm';
-import { withAuth } from '../../../hoc/withAuth';
+import AuthLayout from '../../layouts/auth';
+import LoginForm from '../../components/LoginForm';
+import { withAuth } from '../../hoc/withAuth';
 
 const renderEnterPasswordPageFooter = () => {
   return <Link to="/login">Login to another account</Link>;
