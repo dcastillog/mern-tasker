@@ -1,115 +1,152 @@
-const Task = require('../models/task');
-const Project = require('../models/project');
+const httpStatus = require('http-status');
+const { taskService } = require('../services');
+const catchAsync = require('../utils/catchAsync');
 
-exports.getAll = async (req, res) => {
-  try {
-    const tasks = Task.find();
-    return tasks;
-  } catch (error) {
-    console.error(error);
-  }
+const getTasks = catchAsync(async (req, res) => {
+  const tasks = await taskService.getTasksByUserId(req.user.id);
+  res.send(tasks);
+});
+
+const getTask = catchAsync(async (req, res) => {
+  const task = await taskService.getTaskById(req.params.taskId);
+  res.send(task);
+});
+
+const createTask = catchAsync(async (req, res) => {
+  const task = await taskService.createTask(req.body);
+  res.status(httpStatus.CREATED).send(task);
+});
+
+const updateTask = catchAsync(async (req, res) => {
+  const task = await taskService.updateTaskById(req.params.taskId, req.body);
+  res.send(task);
+});
+
+const deleteTask = catchAsync(async (req, res) => {
+  await taskService.deleteTaskById(req.params.taskId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
+module.exports = {
+  getTasks,
+  getTask,
+  createTask,
+  updateTask,
+  deleteTask,
 };
 
-exports.create = async (req, res) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   return res.status(400).json({ errors: errors.array() });
-  // }
+// const Task = require('../models/task');
+// const Project = require('../models/project');
 
-  try {
-    const { project } = req.body;
+// exports.getAll = async (req, res) => {
+//   try {
+//     const tasks = Task.find();
+//     return tasks;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
-    const projectFound = await Project.findById(project);
-    if (!projectFound) {
-      return res.status(404).json({ msg: 'Project not found' });
-    }
+// exports.create = async (req, res) => {
+//   // const errors = validationResult(req);
+//   // if (!errors.isEmpty()) {
+//   //   return res.status(400).json({ errors: errors.array() });
+//   // }
 
-    if (projectFound.createdBy.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'no autorizado' });
-    }
+//   try {
+//     const { project } = req.body;
 
-    const task = new Task(req.body);
+//     const projectFound = await Project.findById(project);
+//     if (!projectFound) {
+//       return res.status(404).json({ msg: 'Project not found' });
+//     }
 
-    await task.save();
+//     if (projectFound.createdBy.toString() !== req.user.id) {
+//       return res.status(401).json({ msg: 'no autorizado' });
+//     }
 
-    res.status(200).json({ task });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Error');
-  }
-};
+//     const task = new Task(req.body);
 
-exports.getByProject = async (req, res) => {
-  try {
-    const projectFound = await Project.findById(req.params.projectId);
-    if (!projectFound) {
-      return res.status(404).json({ msg: 'Proyecto no encontrado' });
-    }
+//     await task.save();
 
-    // if (projectFound.createdBy.toString() !== req.user.id) {
-    //   return res.status(401).json({ msg: 'no autorizado' });
-    // }
+//     res.status(200).json({ task });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send('Error');
+//   }
+// };
 
-    const tasks = await Task.find({ project: projectFound.id });
-    res.json({ tasks });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Hubo un error');
-  }
-};
+// exports.getByProject = async (req, res) => {
+//   try {
+//     const projectFound = await Project.findById(req.params.projectId);
+//     if (!projectFound) {
+//       return res.status(404).json({ msg: 'Proyecto no encontrado' });
+//     }
 
-exports.update = async (req, res) => {
-  try {
-    const { project, name, status } = req.body;
+//     // if (projectFound.createdBy.toString() !== req.user.id) {
+//     //   return res.status(401).json({ msg: 'no autorizado' });
+//     // }
 
-    let taskFound = await Task.findById(req.params.id);
+//     const tasks = await Task.find({ project: projectFound.id });
+//     res.json({ tasks });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send('Hubo un error');
+//   }
+// };
 
-    if (!taskFound) {
-      return res.status(404).json({ msg: 'Task not found' });
-    }
+// exports.update = async (req, res) => {
+//   try {
+//     const { project, name, status } = req.body;
 
-    const projectFound = await Project.findById(project);
+//     const taskFound = await Task.findById(req.params.id);
 
-    // Revisar si el proyecto actual pertenece al usuario autenticado
-    if (projectFound.createdBy.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'no autorizado' });
-    }
+//     if (!taskFound) {
+//       return res.status(404).json({ msg: 'Task not found' });
+//     }
 
-    const newTask = {};
-    newTask.name = name;
-    newTask.status = status;
+//     const projectFound = await Project.findById(project);
 
-    task = await Task.findOneAndUpdate({ _id: req.params.id }, newTask, {
-      new: true,
-    });
-    res.json({ task });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('error');
-  }
-};
+//     // Revisar si el proyecto actual pertenece al usuario autenticado
+//     if (projectFound.createdBy.toString() !== req.user.id) {
+//       return res.status(401).json({ msg: 'no autorizado' });
+//     }
 
-exports.remove = async (req, res) => {
-  try {
-    const { project } = req.query;
+//     const newTask = {};
+//     newTask.name = name;
+//     newTask.status = status;
 
-    let taskFound = await Task.findById(req.params.id);
+//     task = await Task.findOneAndUpdate({ _id: req.params.id }, newTask, {
+//       new: true,
+//     });
+//     res.json({ task });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send('error');
+//   }
+// };
 
-    if (!taskFound) {
-      return res.status(404).json({ msg: 'No existe esa tarea' });
-    }
+// exports.remove = async (req, res) => {
+//   try {
+//     const { project } = req.query;
 
-    const projectFound = await Project.findById(project);
+//     const taskFound = await Task.findById(req.params.id);
 
-    if (projectFound.createdBy.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'no autorizado' });
-    }
+//     if (!taskFound) {
+//       return res.status(404).json({ msg: 'No existe esa tarea' });
+//     }
 
-    await Task.findOneAndRemove({ _id: req.params.id });
+//     const projectFound = await Project.findById(project);
 
-    res.json({ msg: 'tarea eliminada' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('error');
-  }
-};
+//     if (projectFound.createdBy.toString() !== req.user.id) {
+//       return res.status(401).json({ msg: 'no autorizado' });
+//     }
+
+//     await Task.findOneAndRemove({ _id: req.params.id });
+
+//     res.json({ msg: 'tarea eliminada' });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send('error');
+//   }
+// };
