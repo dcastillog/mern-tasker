@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const logger = require('../config/logger');
 
 const teamSchema = mongoose.Schema(
   {
@@ -7,12 +8,16 @@ const teamSchema = mongoose.Schema(
       required: true,
     },
     code: {
-      type: String,
+      type: Number,
       required: true,
       trim: true,
     },
     members: {
       type: Array,
+      ref: 'User',
+    },
+    owner: {
+      type: mongoose.Types.ObjectId,
       ref: 'User',
     },
   },
@@ -21,9 +26,9 @@ const teamSchema = mongoose.Schema(
   }
 );
 
-userSchema.pre('save', async function (next) {
+teamSchema.pre('save', async function (next) {
   const team = this;
-  // Generate team code
+  team.code = Math.floor(Math.random() * 1000) + 1000;
   next();
 });
 

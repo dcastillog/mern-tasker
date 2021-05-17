@@ -35,10 +35,20 @@ const deleteTask = {
   }),
 };
 
+const assignTask = {
+  params: Joi.object().keys({
+    taskId: Joi.string().custom(objectId),
+  }),
+  body: Joi.object().keys({
+    assignedUser: Joi.string().custom(objectId).required(),
+  }),
+};
+
 module.exports = {
   getTasks,
   getTask,
   createTask,
   updateTask,
   deleteTask,
+  assignTask,
 };

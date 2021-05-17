@@ -8,6 +8,7 @@ const ApiError = require('./utils/ApiError');
 const morgan = require('./config/morgan');
 const routes = require('./routes');
 const config = require('./config/config');
+
 const { jwtStrategy } = require('./config/passport');
 
 const app = express();

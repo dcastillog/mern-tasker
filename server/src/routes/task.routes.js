@@ -5,7 +5,6 @@ const { taskValidation } = require('../validations');
 const taskController = require('../controllers/task.controller');
 const router = Router();
 
-/** Add midleware auth() */
 router
   .route('/')
   .get(auth(), validate(taskValidation.getTasks), taskController.getTasks)
@@ -17,10 +16,6 @@ router
   .patch(auth(), validate(taskValidation.updateTask), taskController.updateTask)
   .delete(auth(), validate(taskValidation.deleteTask), taskController.deleteTask);
 
-// router.get('/', auth, taskController.getAll);
-// router.get('/:projectId', taskController.getByProject);
-// router.post('/', auth, taskController.create);
-// router.put('/:id', auth, taskController.update);
-// router.delete('/:id', auth, taskController.remove);
+router.post('/assign/:taskId', auth(), validate(taskValidation.assignTask), taskController.assignTask);
 
 module.exports = router;
