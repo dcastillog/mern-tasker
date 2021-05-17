@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { HiUser } from 'react-icons/hi';
 import { withApi } from '../hoc/withApi';
 import { AppBar, Button, Menu, MenuItem, Grid, Toolbar, Typography, Icon, makeStyles } from '@material-ui/core';
-// import { useStyles } from './styles';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -45,9 +44,9 @@ const Header = ({ user, api, onLogout, isOpenDrawer }) => {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    if (api) {
-      await api.logout();
-    }
+    // if (api) {
+    //   await api.logout();
+    // }
     await onLogout();
     window.location = '/login';
   };

@@ -3,15 +3,64 @@ import axios from './axios';
 class Api {
   constructor() {}
 
-  get = async (endpoint) => {
-    return await axios.get(endpoint);
+  get = async (url) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(url)
+        .then((response) => {
+          if (response) {
+            resolve(response.data);
+          }
+          reject(new Error('Sorry, something went wrong. Please try later'));
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    });
   };
-  login = async () => {
+  post = async (url, data) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(url, data)
+        .then((response) => {
+          if (response) {
+            resolve(response.data);
+          }
+          reject(new Error('Sorry, something went wrong. Please try later'));
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    });
+  };
+  delete = async (url, config) => {
+    return new Promise((resolve, reject) => {
+      axios.delete(url, config).then((response) => {
+        resolve();
+      });
+    });
+  };
+  patch = async (url, data) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .patch(url, data)
+        .then((response) => {
+          if (response) {
+            resolve(response.data);
+          }
+          reject(new Error('Sorry, something went wrong. Please try later'));
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    });
+  };
+  login = async (email, password) => {
     return new Promise((resolve, reject) => {
       axios
         .post('/auth/signin', {
-          email: 'test1@email.com',
-          password: 'test1234#tasker',
+          email: email,
+          password: password,
         })
         .then((response) => {
           if (response) {
@@ -42,6 +91,19 @@ class Api {
         })
         .catch((error) => {
           console.log(error);
+        });
+    });
+  };
+
+  logout = async () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post('/auth/logout')
+        .then((_) => {
+          resolve();
+        })
+        .catch((e) => {
+          reject();
         });
     });
   };

@@ -22,12 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TaskList = ({ tasks = [], onRemove, onUpdate, onEdit, onToggle }) => {
+const TaskList = ({ tasks = [], onDelete, onUpdate, onEdit, onToggle }) => {
   const classes = useStyles();
 
-  const handleRemoveTask = (id) => {
-    onRemove(id);
-  };
   const completedTasks = tasks.filter((task) => task.isCompleted);
 
   return (
@@ -35,24 +32,24 @@ const TaskList = ({ tasks = [], onRemove, onUpdate, onEdit, onToggle }) => {
       {tasks.map((task) => {
         if (!task.isCompleted) {
           return (
-            <ListItem key={task.id}>
+            <ListItem key={task._id}>
               <ListItemIcon>
                 <Checkbox
                   edge="start"
                   checked={task.isCompleted}
                   tabIndex={-1}
-                  onClick={() => onToggle(task.id, 'isCompleted', !task.isCompleted, true)}
+                  onClick={() => onToggle(task._id, 'isCompleted', !task.isCompleted, true)}
                 />
               </ListItemIcon>
               <Input
                 value={task.text}
-                onBlur={() => onUpdate(task)}
-                onChange={(e) => onEdit(task.id, e.target.value)}
                 className={classes.input}
+                onBlur={() => onUpdate(task._id, { text: task.text, isCompleted: task.isCompleted })}
+                onChange={(e) => onEdit(task._id, e.target.value)}
               />
               <ListItemSecondaryAction>
                 <Tooltip title="Delete">
-                  <IconButton onClick={() => handleRemoveTask(task.id)}>
+                  <IconButton onClick={() => onDelete(task._id)}>
                     <HiOutlineTrash />
                   </IconButton>
                 </Tooltip>
@@ -74,9 +71,7 @@ const TaskList = ({ tasks = [], onRemove, onUpdate, onEdit, onToggle }) => {
               <Checkbox
                 edge="start"
                 checked={completedTask.isCompleted}
-                onClick={() =>
-                  onToggle(completedTask.id, 'isCompleted', !completedTask.isCompleted, true)
-                }
+                onClick={() => onToggle(completedTask._id, 'isCompleted', !completedTask.isCompleted, true)}
               />
             </ListItemIcon>
             <Input disabled readOnly value={completedTask.text} className={classes.input} />
@@ -89,7 +84,7 @@ const TaskList = ({ tasks = [], onRemove, onUpdate, onEdit, onToggle }) => {
 
 TaskList.propTypes = {
   tasks: PropTypes.array,
-  onRemove: PropTypes.func,
+  onDelete: PropTypes.func,
   onUpdate: PropTypes.func,
   onEdit: PropTypes.func,
   onToggle: PropTypes.func,

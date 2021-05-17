@@ -7,7 +7,7 @@ import { useInput } from '../../hooks';
 
 import { InputTask, TaskList, EmptyTasks } from '../';
 
-const UserTasks = ({ tasks, isLoadingAdd, onAdd, onRemove, onEdit, onUpdate, onToggle }) => {
+const UserTasks = ({ tasks, isLoadingAdd, onAdd, onDelete, onEdit, onUpdate, onToggle }) => {
   const [newTask, handleInputChange, reset] = useInput('');
 
   const handleAddTask = () => {
@@ -17,22 +17,11 @@ const UserTasks = ({ tasks, isLoadingAdd, onAdd, onRemove, onEdit, onUpdate, onT
   };
 
   const renderInputTask = () => (
-    <InputTask
-      value={newTask}
-      isLoadingAdd={isLoadingAdd}
-      onChange={handleInputChange}
-      onAdd={handleAddTask}
-    />
+    <InputTask value={newTask} isLoadingAdd={isLoadingAdd} onChange={handleInputChange} onAdd={handleAddTask} />
   );
   const renderEmptyTasks = () => <EmptyTasks />;
   const renderTaskList = () => (
-    <TaskList
-      tasks={tasks}
-      onRemove={(id) => onRemove(id)}
-      onUpdate={onUpdate}
-      onEdit={onEdit}
-      onToggle={onToggle}
-    />
+    <TaskList tasks={tasks} onDelete={(id) => onDelete(id)} onUpdate={onUpdate} onEdit={onEdit} onToggle={onToggle} />
   );
 
   return (
@@ -47,7 +36,7 @@ UserTasks.propTypes = {
   tasks: PropTypes.array,
   isLoadingAdd: PropTypes.bool,
   onAdd: PropTypes.func,
-  onRemove: PropTypes.func,
+  onDelete: PropTypes.func,
   onEdit: PropTypes.func,
   onUpdate: PropTypes.func,
 };

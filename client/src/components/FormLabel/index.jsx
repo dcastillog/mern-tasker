@@ -18,7 +18,7 @@ const style = {
 
 const FormLabel = ({ label }) => {
   return (
-    <Grid item md={4} style={style.labelGrid}>
+    <Grid item xs={5} md={4} style={style.labelGrid}>
       <label style={style.label}>{label}</label>
     </Grid>
   );

@@ -1,14 +1,16 @@
-import cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 import { decodeValue, encodeValue } from '../utils';
 import redirect from './redirect';
 
-export const setCookie = (key, value, days = 1) => {
+export const setCookie = (key, value, expires, days = 1) => {
   if (process.browser) {
     const today = new Date();
     const resultDate = new Date(today);
+    const expiresDate = new Date(expires);
     resultDate.setDate(today.getDate() + days);
-    cookie.set(key, encodeValue(value), {
-      expipres: resultDate,
+
+    Cookies.set(key, encodeValue(value), {
+      expires: expiresDate,
       path: '/',
     });
   }
@@ -16,7 +18,7 @@ export const setCookie = (key, value, days = 1) => {
 
 export const removeCookie = (key) => {
   if (process.browser) {
-    cookie.remove(key, {
+    Cookies.remove(key, {
       expires: 1,
     });
   }
@@ -27,7 +29,7 @@ export const getCookie = (key, req) => {
 };
 
 const getCookieFromBrowser = (key) => {
-  return decodeValue(cookie.get(key));
+  return decodeValue(Cookies.get(key));
 };
 
 const getCookieFromServer = (key, req) => {
@@ -62,7 +64,8 @@ export const removeLocaleStorage = (key) => {
 };
 
 export const getJwt = () => {
-  return getLocaleStorage('tokens');
+  // return getLocaleStorage('tokens');
+  return getCookie('access');
 };
 
 export const isAuthenticated = () => !!getJwt();

@@ -1,5 +1,12 @@
 import React, { createContext, useState } from 'react';
-import { getLocaleStorage, isAuthenticated, removeLocaleStorage, setLocaleStorage } from '../lib/session';
+import {
+  getLocaleStorage,
+  isAuthenticated,
+  removeCookie,
+  removeLocaleStorage,
+  setCookie,
+  setLocaleStorage,
+} from '../lib/session';
 
 export const AuthContext = createContext();
 
@@ -12,14 +19,18 @@ const Provider = ({ children }) => {
     activateAuth: (authUser, tokens) => {
       setUser(authUser);
       setUserLoaded(true);
+      setCookie('access', tokens.access.token, tokens.access.expires);
+      setCookie('refresh', tokens.refresh.token, tokens.refresh.expires);
       setLocaleStorage('user', authUser);
-      setLocaleStorage('tokens', tokens);
+      // setLocaleStorage('tokens', tokens);
     },
     removeAuth: () => {
       setUser(null);
       setUserLoaded(false);
+      removeCookie('access');
+      removeCookie('refresh');
       removeLocaleStorage('user');
-      removeLocaleStorage('tokens');
+      // removeLocaleStorage('tokens');
     },
   };
 

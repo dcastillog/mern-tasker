@@ -11,7 +11,7 @@ const style = {
 
 const FormTextField = ({ value, name, type = 'text', focused = false, error = false, helperText, onChange, onKeyDown }) => {
   return (
-    <Grid item md={8} style={style.grid}>
+    <Grid item xs={7} md={8} style={style.grid}>
       <TextField
         error={error}
         helperText={helperText}

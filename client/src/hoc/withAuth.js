@@ -21,36 +21,37 @@ export const withAuth = (Component) => (props) => {
       let { tokens = null } = data;
       activateAuth(user, tokens);
       setLoading(false);
+      console.log(user, 'withAuth');
       history.push('/home');
     } catch (error) {
       console.log({ error });
     }
   };
 
-  const onSignInWithEmailAndPassword = async () => {
+  const onSignInWithEmailAndPassword = async (email, password) => {
     setLoading(true);
-    api
-      .login()
+    await api
+      .login(email, password)
       .then((response) => {
         saveAuthAndRedirect(response);
       })
       .catch((error) => {
-        const { message } = error;
-        setAlert({ message: message, severity: 'error', status: true });
+        const { response } = error;
+        setAlert({ message: response.data.message, severity: 'error', status: true });
         setLoading(false);
       });
   };
 
   const onSignUp = async (data) => {
     setLoading(true);
-    api
+    await api
       .signUp(data)
       .then((response) => {
         saveAuthAndRedirect(response);
       })
       .catch((error) => {
-        const { message } = error;
-        setAlert({ message: message, severity: 'error', status: true });
+        const { response } = error;
+        setAlert({ message: response.data.message, severity: 'error', status: true });
         setLoading(false);
       });
   };

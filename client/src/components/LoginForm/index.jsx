@@ -3,19 +3,22 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useForm } from '../../hooks';
 import { FormGroup, FormLabel, FormTextField, LoadingButton } from '../';
-import { Checkbox, Divider, Grid } from '@material-ui/core';
+import { Checkbox, Divider, Grid, makeStyles } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { lowercaseRegex, numericRegex, uppercaseRegex } from '../../utils/regex';
 
-const style = {
+const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
     width: '35%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
-};
+}));
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().lowercase().email('Must be a valid email').required('Email is required'),
@@ -24,16 +27,19 @@ const LoginSchema = Yup.object().shape({
 
 const LoginForm = ({ email, loading, onSignInWithEmailAndPassword }) => {
   const initialValues = {
-    email: email,
+    email: '',
     password: '',
   };
 
-  const handleSubmit = () => {
-    onSignInWithEmailAndPassword();
+  const classes = useStyles();
+
+  const handleSubmit = async (data) => {
+    console.log(data);
+    await onSignInWithEmailAndPassword(data.email, data.password);
   };
 
   return (
-    <div style={style.form}>
+    <div className={classes.form}>
       <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={handleSubmit} validateOnChange={false}>
         {({ errors }) => {
           return (
@@ -51,20 +57,24 @@ const LoginForm = ({ email, loading, onSignInWithEmailAndPassword }) => {
                   error={errors.password}
                   helperText={errors.password}
                   focused
-                  onKeyDown={(e) => (e.key === 'Enter' ? handleSubmit() : '')}
+                  onKeyDown={(e) => (e.key === 'Enter' ? handleSubmit : '')}
                 />
               </FormGroup>
 
-              <Grid container>
+              <Grid container alignItems="center" justify="center">
                 <Checkbox />
                 <label htmlFor="">Mantenerme dentro de mi sesión</label>
               </Grid>
 
-              <Link>Forgot your password?</Link>
+              <Grid container alignItems="center" justify="center">
+                <Link>Forgot your password?</Link>
+              </Grid>
 
-              <span>
-                ¿No tienes cuenta? <Link color="">Regístrate</Link>
-              </span>
+              <Grid container alignItems="center" justify="center">
+                <span>
+                  ¿No tienes cuenta? <Link color="">Regístrate</Link>
+                </span>
+              </Grid>
 
               <LoadingButton type="submit" loading={loading}>
                 Login

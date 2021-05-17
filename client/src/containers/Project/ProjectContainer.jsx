@@ -13,11 +13,10 @@ const style = {
   },
 };
 
-const HomeContainer = ({ api, user }) => {
+const ProjectContainer = ({ api, user }) => {
   const [currentTab, setCurrenTab] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [userTasks, setUserTasks] = useState([]);
-  const [userProjects, setUserProjects] = useState([]);
   const [userTeam, setUserTeam] = useState([]);
 
   const handleChangeTab = (event, newTab) => {
@@ -34,17 +33,6 @@ const HomeContainer = ({ api, user }) => {
     try {
       const data = await api.get('/tasks');
       setUserTasks(data);
-      setIsLoading(false);
-    } catch (e) {
-      setIsLoading(false);
-    }
-  }
-
-  async function fetchUserProjects() {
-    setIsLoading(true);
-    try {
-      const data = await api.get('/projects');
-      setUserProjects(data);
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
@@ -79,15 +67,8 @@ const HomeContainer = ({ api, user }) => {
   }
   return (
     <Container style={{ border: '1px solid red' }}>
-      <TaskContainer
-        api={api}
-        user={user}
-        tasks={userTasks}
-        onAddTask={handleAddTask}
-        onDeleteTask={handleDeleteTask}
-        onSetTask={(tasks) => setUserTasks(tasks)}
-      />
-      {/* <Paper elevation={8}>
+      <h2>Project 1</h2>
+      <Paper elevation={8}>
         <Tabs value={currentTab} onChange={handleChangeTab} centered indicatorColor="primary" textColor="primary">
           <Tab label="My Tasks" icon={<HiUser style={style.icon} />}></Tab>
           <Tab label="My Team" icon={<HiUserGroup style={style.icon} />}></Tab>
@@ -105,9 +86,9 @@ const HomeContainer = ({ api, user }) => {
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
         <TeamContainer team={userTeam} onSetTeam={setUserTeam} />
-      </TabPanel> */}
+      </TabPanel>
     </Container>
   );
 };
 
-export default withUser(withApi(HomeContainer));
+export default withUser(withApi(ProjectContainer));
