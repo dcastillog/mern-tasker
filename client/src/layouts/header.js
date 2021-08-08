@@ -1,107 +1,101 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { HiUser } from 'react-icons/hi';
-import { withApi } from '../hoc/withApi';
-import { AppBar, Button, Menu, MenuItem, Grid, Toolbar, Typography, Icon, makeStyles } from '@material-ui/core';
+import {
+  AiOutlineMenu,
+  AiOutlineHome,
+  AiOutlinePlus,
+  AiOutlineQuestionCircle,
+  BiBell,
+  BiUserCircle,
+} from 'react-icons/all';
+import {
+  AppBar,
+  InputBase,
+  makeStyles,
+  fade,
+  Toolbar,
+  Grid,
+  IconButton,
+} from '@material-ui/core';
+import { CreateTaskQuicklyDialog } from '../components/CreateTaskQuicklyDialog';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    width: `calc(100% - ${theme.spacing(7) + 1}px)`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+    zIndex: theme.zIndex.drawer + 1,
   },
-  appBarShift: {
-    width: `calc(100% - ${theme.drawerWidth}px)`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+  toolbar: {
+    height: '44px',
+    minHeight: '44px',
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.text.hint,
+    },
+    marginLeft: 0,
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    width: '100%',
+    transition: theme.transitions.create('width'),
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.text.hint,
+    },
+    marginLeft: 0,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: '200px',
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  hide: {
-    display: 'none',
-  },
 }));
 
-const Header = ({ user, api, onLogout, isOpenDrawer }) => {
+export const Header = () => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleOpenMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleCloseMenu = (event) => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    // if (api) {
-    //   await api.logout();
-    // }
-    await onLogout();
-    window.location = '/login';
-  };
-
+  const [quicklyDialog, setQuicklyDialog] = useState(false);
   return (
-    <AppBar
-      position="fixed"
-      className={clsx(classes.appBar, {
-        [classes.appBarShift]: isOpenDrawer,
-      })}
-    >
-      <Toolbar>
-        <Grid container>
-          <h5>
-            {/* {authenticatedUser ? (
-              <p className="username">
-                Hola <span>{authenticatedUser.name}</span>
-              </p>
-            ) : null} */}
-            <p className="username">
-              Hello <span>Username </span>
-            </p>
-          </h5>
-        </Grid>
-        <Grid container direction="row" justify="flex-end" alignItems="center">
-          {/* <Button color="inherit" onClick={() => logout()}>
-            CERRAR SESIÓN
-          </Button> */}
-          <Button color="inherit" style={{ textTransform: 'none' }} onClick={handleOpenMenu}>
-            <Grid container justify="flex-end" alignItems="center">
-              <Grid item>
-                <Typography>Name</Typography>
-              </Grid>
-              <Grid item>
-                <Icon color="inherit">
-                  <HiUser />
-                </Icon>
-              </Grid>
-            </Grid>
-          </Button>
-          <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
-            <MenuItem>Profile</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
+    <AppBar position="fixed" className={classes.appBar}>
+      <Toolbar className={classes.toolbar}>
+        <Grid container spacing={20} direction="row" justify="center" alignItems="center">
+          <Grid item xs={6}>
+            <div>
+              <IconButton edge="start" color="inherit" className={classes.menuButton}>
+                <AiOutlineMenu />
+              </IconButton>
+              <IconButton edge="start" color="inherit">
+                <AiOutlineHome />
+              </IconButton>
+              <InputBase placeholder="Search" classes={{ root: classes.inputRoot, input: classes.inputInput }} />
+            </div>
+          </Grid>
+          <Grid container alignItems="center" justify="flex-end" xs={6}>
+            <IconButton color="inherit" edge="start" style={{ margin: '0 25px' }} onClick={() => setQuicklyDialog(!quicklyDialog)}>
+              <AiOutlinePlus />
+            </IconButton>
+            <IconButton color="inherit" edge="start">
+              <AiOutlineQuestionCircle />
+            </IconButton>
+            <IconButton color="inherit" edge="start">
+              <BiBell />
+            </IconButton>
+            <IconButton color="inherit" edge="start">
+              <BiUserCircle />
+            </IconButton>
+          </Grid>
         </Grid>
       </Toolbar>
+
+      <CreateTaskQuicklyDialog open={quicklyDialog} close={() => setQuicklyDialog(!quicklyDialog)} />
     </AppBar>
   );
 };
-
-Header.propTypes = {
-  isOpenDrawer: PropTypes.bool,
-  api: PropTypes.object,
-  onLogout: PropTypes.func,
-  user: PropTypes.object,
-};
-
-export default withApi(Header);

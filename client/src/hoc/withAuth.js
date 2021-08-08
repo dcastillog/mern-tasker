@@ -1,71 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { ApiContext } from '../contexts/api';
-import { AuthContext } from '../contexts/auth';
-import { redirectIfAuthenticated } from '../lib/session';
+import { useContext, useState } from 'react';
+import { useAuthValue } from '../contexts/auth';
 
 export const withAuth = (Component) => (props) => {
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState({ message: '', severity: '', status: false });
-  const { activateAuth } = useContext(AuthContext);
-  const history = useHistory();
-  const api = useContext(ApiContext);
-
-  useEffect(() => {
-    redirectIfAuthenticated();
-  }, []);
-
-  const saveAuthAndRedirect = (data) => {
-    try {
-      const { user } = data;
-      let { tokens = null } = data;
-      activateAuth(user, tokens);
-      setLoading(false);
-      console.log(user, 'withAuth');
-      history.push('/home');
-    } catch (error) {
-      console.log({ error });
-    }
-  };
-
-  const onSignInWithEmailAndPassword = async (email, password) => {
-    setLoading(true);
-    await api
-      .login(email, password)
-      .then((response) => {
-        saveAuthAndRedirect(response);
-      })
-      .catch((error) => {
-        const { response } = error;
-        setAlert({ message: response.data.message, severity: 'error', status: true });
-        setLoading(false);
-      });
-  };
-
-  const onSignUp = async (data) => {
-    setLoading(true);
-    await api
-      .signUp(data)
-      .then((response) => {
-        saveAuthAndRedirect(response);
-      })
-      .catch((error) => {
-        const { response } = error;
-        setAlert({ message: response.data.message, severity: 'error', status: true });
-        setLoading(false);
-      });
-  };
+  const { signInWithEmailAndPassword, signInWithGoogle, signInWithGithub, register } = useAuthValue();
 
   return (
-    <div>
-      <Component
-        {...props}
-        loading={loading}
-        alert={alert}
-        onShowAlert={setAlert}
-        onSignInWithEmailAndPassword={onSignInWithEmailAndPassword}
-        onSignUp={onSignUp}
-      />
-    </div>
+    <Component
+      {...props}
+      loading={loading}
+      onSignInWithEmailAndPassword={signInWithEmailAndPassword}
+      onSignInWithGoogle={signInWithGoogle}
+      onSignInWithGithub={signInWithGithub}
+      onRegister={register}
+    />
   );
 };

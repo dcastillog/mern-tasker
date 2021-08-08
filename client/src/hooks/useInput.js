@@ -1,9 +1,7 @@
 import { useState } from 'react';
 
 const useInput = (initialValue) => {
-  const [value, setValue] = useState(
-    initialValue !== undefined ? initialValue : null
-  );
+  const [value, setValue] = useState(initialValue !== undefined ? initialValue : null);
 
   const handleInputChange = (val) => {
     if (val.target !== null) {
@@ -14,6 +12,7 @@ const useInput = (initialValue) => {
   };
 
   const reset = () => {
+    console.log('reset');
     setValue('');
   };
 

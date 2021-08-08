@@ -1,40 +1,51 @@
-import React, { createContext, useState } from 'react';
-import {
-  getLocaleStorage,
-  isAuthenticated,
-  removeCookie,
-  removeLocaleStorage,
-  setCookie,
-  setLocaleStorage,
-} from '../lib/session';
+import { createContext, useContext, useState } from 'react';
+import { getLocaleStorage, isAuthenticated } from '../lib/session';
 
 export const AuthContext = createContext();
-
-const Provider = ({ children }) => {
-  const [userLoaded, setUserLoaded] = useState(() => isAuthenticated());
+export const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false);
+  const [userLoaded, setUserLoaded] = useState(() => !!isAuthenticated());
   const [user, setUser] = useState(() => getLocaleStorage('user'));
+
+  const signInWithEmailAndPassword = (email, password) => {
+    try {
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const signInWithGoogle = () => {
+    try {
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const signInWithGithub = () => {
+    try {
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const register = () => {
+    try {
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const value = {
-    userLoaded,
+    loading,
     user,
-    activateAuth: (authUser, tokens) => {
-      setUser(authUser);
-      setUserLoaded(true);
-      setCookie('access', tokens.access.token, tokens.access.expires);
-      setCookie('refresh', tokens.refresh.token, tokens.refresh.expires);
-      setLocaleStorage('user', authUser);
-      // setLocaleStorage('tokens', tokens);
-    },
-    removeAuth: () => {
-      setUser(null);
-      setUserLoaded(false);
-      removeCookie('access');
-      removeCookie('refresh');
-      removeLocaleStorage('user');
-      // removeLocaleStorage('tokens');
-    },
+    userLoaded,
+    signInWithEmailAndPassword,
+    signInWithGoogle,
+    signInWithGithub,
+    register,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export default { Provider, Consumer: AuthContext.Consumer };
+export const useAuthValue = () => useContext(AuthContext);

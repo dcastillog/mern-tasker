@@ -1,20 +1,11 @@
 import { useState } from 'react';
 
-const useAlert = () => {
-  const [alert, setAlert] = useState(null);
+const useInput = (initialValue) => {
+  const [show, setShow] = useState(false);
 
-  const showAlert = (message, category) => {
-    setAlert({
-      message,
-      category,
-    });
+  const handleShowAlert = () => {};
 
-    setTimeout(() => {
-      setAlert(null);
-    }, 5000);
-  };
-
-  return [alert, showAlert];
+  return [];
 };
 
-export default useAlert;
+export default useInput;

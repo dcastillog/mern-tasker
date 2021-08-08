@@ -1,38 +1,33 @@
+import { ThemeProvider } from '@material-ui/core';
 import React from 'react';
-
-import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline } from '@material-ui/core';
-
-import AuthContext from './contexts/auth';
-import { ApiContext } from './contexts/api';
-import { Api } from './lib/api';
-import AppRouter from './routers/AppRouter';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import theme from './styles/materialui/theme';
-import 'animate.css';
-
-// import tokenAuth from './config/tokenAuth';
-
-// Revisar si tenemos un token
-// const token = localStorage.getItem('token');
-
-// if (token) {
-//   tokenAuth(token);
-// }
-
-const api = new Api();
+import { ProjectsProvider, TeamsProvider, SelectedFilterProvider } from './contexts';
+import { WelcomePage, HomePage, NotFoundPage, ProjectPage, TeamPage, LoginPage, ForgotPasswordPage } from './pages';
 
 function App() {
   return (
-    <>
-      <AuthContext.Provider>
-        <ApiContext.Provider value={api}>
+    <SelectedFilterProvider>
+      <ProjectsProvider>
+        <TeamsProvider>
           <ThemeProvider theme={theme}>
-            <AppRouter />
+            <Router>
+              <Switch>
+                <Route exact path="/" component={WelcomePage} />
+                <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+                <Route exact path="/app/today" component={HomePage} />
+                <Route exact path="/app/upcoming" component={HomePage} />
+                <Route exact path="/app/project/:id" component={ProjectPage} />
+                <Route exact path="/app/team/:id" component={TeamPage} />
+                {/* <Redirect to="/app/today" /> */}
+                <Route exact path="**" component={NotFoundPage} />
+              </Switch>
+            </Router>
           </ThemeProvider>
-        </ApiContext.Provider>
-      </AuthContext.Provider>
-      <CssBaseline />
-    </>
+        </TeamsProvider>
+      </ProjectsProvider>
+    </SelectedFilterProvider>
   );
 }
 

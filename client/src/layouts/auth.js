@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Grid, AppBar, makeStyles, useTheme } from '@material-ui/core';
 import { SocialButton, SeparatorLine } from '../components';
 
@@ -33,16 +32,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuthLayout = ({ children, footer }) => {
-  const theme = useTheme();
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar style={{ background: theme.palette.secondary.dark }}>
-        <Grid container alignItems="center" justify="flex-start">
-          <img className={classes.logo} src="/images/logo-dark.svg" alt="Tudu logo" />
-        </Grid>
-      </AppBar>
       <Grid alignItems="center" justify="center" direction="column" container className={classes.container}>
         {children}
         <SeparatorLine>
